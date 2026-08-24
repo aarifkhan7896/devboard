@@ -5,6 +5,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { HealthCheckService } from './health-check.service';
+import { HealthStatus } from '../common/health-status.enum';
 
 @ApiTags('Health Check')
 @Controller('health-check')
@@ -15,27 +16,27 @@ export class HealthCheckController {
   @ApiOkResponse({
     description: 'Health check successful',
     type: Object,
-    example: { status: 'ok' },
+    example: { status: HealthStatus.OK },
   })
   async healthCheck(): Promise<{ status: string }> {
-    return { status: 'ok' };
+    return { status: HealthStatus.OK };
   }
 
   @Get('mongo')
   @ApiOkResponse({
     description: 'MongoDB health check successful',
     type: Object,
-    example: { status: 'ok' },
+    example: { status: HealthStatus.OK },
   })
   @ApiServiceUnavailableResponse({
     description: 'MongoDB health check failed',
     type: Object,
-    example: { status: 'error' },
+    example: { status: HealthStatus.ERROR },
   })
   async mongoHealthCheck(): Promise<{ status: string }> {
     const result = await this.healthCheckService.checkMongoHealth();
 
-    if (result.status === 'error') {
+    if (result.status === HealthStatus.ERROR) {
       throw new HttpException(result, HttpStatus.SERVICE_UNAVAILABLE);
     }
 

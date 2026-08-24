@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
+import { HealthStatus } from '../common/health-status.enum';
 
 @Injectable()
 export class HealthCheckService {
@@ -13,7 +14,7 @@ export class HealthCheckService {
     const isHealthy = this.mongoConnection.readyState === 1;
 
     return {
-      status: isHealthy ? 'ok' : 'error',
+      status: isHealthy ? HealthStatus.OK : HealthStatus.ERROR,
     };
   }
 }
