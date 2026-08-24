@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
+import { appConfig } from './config/app.config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [],
-  controllers: [],
-  providers: [],
+  imports: [MongooseModule.forRoot(appConfig.database.mongodbUri)],
 })
 export class AppModule {}
