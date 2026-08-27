@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HealthCheckController } from './health-check.controller';
+import { HealthCheckService } from './health-check.service';
 
 describe('HealthCheckController', () => {
   let controller: HealthCheckController;
@@ -7,6 +8,12 @@ describe('HealthCheckController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [HealthCheckController],
+      providers: [
+        {
+          provide: HealthCheckService,
+          useValue: { checkMongoHealth: jest.fn() },
+        },
+      ],
     }).compile();
 
     controller = module.get<HealthCheckController>(HealthCheckController);

@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getConnectionToken } from '@nestjs/mongoose';
 import { HealthCheckService } from './health-check.service';
 
 describe('HealthCheckService', () => {
@@ -6,7 +7,13 @@ describe('HealthCheckService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [HealthCheckService],
+      providers: [
+        HealthCheckService,
+        {
+          provide: getConnectionToken(),
+          useValue: { readyState: 1 },
+        },
+      ],
     }).compile();
 
     service = module.get<HealthCheckService>(HealthCheckService);

@@ -10,8 +10,8 @@ export class HealthCheckService {
     private readonly mongoConnection: Connection,
   ) {}
 
-  async checkMongoHealth(): Promise<{ status: string }> {
-    const isHealthy = this.mongoConnection.readyState === 1;
+  checkMongoHealth(): { status: HealthStatus } {
+    const isHealthy = Number(this.mongoConnection.readyState) === 1;
 
     return {
       status: isHealthy ? HealthStatus.OK : HealthStatus.ERROR,

@@ -4,6 +4,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { HealthCheckModule } from './health-check/health-check.module';
 
 @Module({
-  imports: [MongooseModule.forRoot(appConfig.database.mongodbUri), HealthCheckModule],
+  imports: [
+    MongooseModule.forRoot(appConfig.database.mongodbUri),
+    HealthCheckModule,
+  ],
 })
 export class AppModule {}

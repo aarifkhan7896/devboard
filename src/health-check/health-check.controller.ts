@@ -18,7 +18,7 @@ export class HealthCheckController {
     type: Object,
     example: { status: HealthStatus.OK },
   })
-  async healthCheck(): Promise<{ status: string }> {
+  healthCheck(): { status: HealthStatus } {
     return { status: HealthStatus.OK };
   }
 
@@ -33,8 +33,8 @@ export class HealthCheckController {
     type: Object,
     example: { status: HealthStatus.ERROR },
   })
-  async mongoHealthCheck(): Promise<{ status: string }> {
-    const result = await this.healthCheckService.checkMongoHealth();
+  mongoHealthCheck(): { status: HealthStatus } {
+    const result = this.healthCheckService.checkMongoHealth();
 
     if (result.status === HealthStatus.ERROR) {
       throw new HttpException(result, HttpStatus.SERVICE_UNAVAILABLE);
