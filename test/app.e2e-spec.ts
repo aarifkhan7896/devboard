@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
+// Supertest exports a CommonJS callable, so use its TypeScript-compatible import form.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import request = require('supertest');
 import { App } from 'supertest/types';
 import { HealthCheckController } from './../src/health-check/health-check.controller';
 import { HealthCheckService } from './../src/health-check/health-check.service';
