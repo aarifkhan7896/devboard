@@ -11,4 +11,6 @@ export const appConfig = {
   jwt: {
     secret: getenv('JWT_SECRET', 'APP_VAULT'),
   },
+
+  bcryptSaltRounds: getenv.int('BCRYPT_SALT_ROUNDS', 'APP_VAULT'),
 };
