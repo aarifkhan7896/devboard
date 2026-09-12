@@ -18,7 +18,15 @@ export class UsersService {
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
   private readonly logger = new Logger(UsersService.name);
 
+  /**
+   * Creates a new user record after validating email uniqueness and hashing the password.
+   *
+   * @param userData - User payload to be persisted.
+   * @returns An object containing the created user ID and success message.
+   */
   async createUser(userData: CreateUserDto) {
+    this.logger.log(`Creating user with email: ${userData.email}`);
+
     const existingUser = await this.userModel
       .findOne(
         {
@@ -57,6 +65,12 @@ export class UsersService {
     };
   }
 
+  /**
+   * Fetches a single user by ID.
+   *
+   * @param id - The user identifier to look up.
+   * @returns The selected user profile details.
+   */
   async getUserById(id: string) {
     const userId = validateUserId(id);
     this.logger.log(`Retrieving user with ID: ${id}`);
@@ -84,6 +98,12 @@ export class UsersService {
     return user;
   }
 
+  /**
+   * Deletes a user from the system by ID.
+   *
+   * @param id - The user identifier to delete.
+   * @returns The deletion result and confirmation message.
+   */
   async deleteUserById(id: string) {
     const userId = validateUserId(id);
     this.logger.log(`Deleting user with ID: ${id}`);
@@ -103,7 +123,16 @@ export class UsersService {
     };
   }
 
+  /**
+   * Retrieves a paginated list of users with custom sorting.
+   *
+   * @param paginationDto - Pagination configuration.
+   * @param sort - Sort expression used for ordering the list.
+   * @returns A paginated response containing user data and metadata.
+   */
   async getUsers(paginationDto: PaginationDto, sort: string) {
+    this.logger.log('Fetching users with pagination');
+
     const { page, limit } = paginationDto;
     const sortQuery = parseSort(sort);
 
@@ -145,10 +174,19 @@ export class UsersService {
     return createPagination(paginationDto, totalCount, responseData);
   }
 
+  /**
+   * Updates an existing user's record, optionally rehashing the password.
+   *
+   * @param id - The user identifier to update.
+   * @param updateUserRecordDto - The fields to update.
+   * @returns A confirmation object with the updated user ID and message.
+   */
   async updateUserDetails(
     id: string,
     updateUserRecordDto: UpdateUserRecordDto,
   ) {
+    this.logger.log(`Updating user details for ID: ${id}`);
+
     const userId = validateUserId(id);
 
     const { password, ...restData } = updateUserRecordDto;
