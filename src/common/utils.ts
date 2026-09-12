@@ -22,7 +22,7 @@ export const parseSort = (sort: string): Record<string, 1 | -1> => {
   return result;
 };
 
-export const validateUserId = (id: string): Types.ObjectId => {
+export const validateMongoId = (id: string): Types.ObjectId => {
   if (!Types.ObjectId.isValid(id)) {
     throw new HttpException(
       responseMessages.invalidUserId,

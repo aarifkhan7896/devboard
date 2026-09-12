@@ -7,7 +7,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { responseMessages } from '../common/response-info';
 import { PaginationDto } from '../common/pagination/pagination.dto';
 import { createPagination } from '../common/pagination/pagination.util';
-import { parseSort, validateUserId } from '../common/utils';
+import { parseSort, validateMongoId } from '../common/utils';
 import { UserResponseDto } from './dto/user-response.dto';
 import * as bcrypt from 'bcrypt';
 import { appConfig } from '../config/app.config';
@@ -72,7 +72,7 @@ export class UsersService {
    * @returns The selected user profile details.
    */
   async getUserById(id: string) {
-    const userId = validateUserId(id);
+    const userId = validateMongoId(id);
     this.logger.log(`Retrieving user with ID: ${id}`);
 
     const user = await this.userModel
@@ -105,7 +105,7 @@ export class UsersService {
    * @returns The deletion result and confirmation message.
    */
   async deleteUserById(id: string) {
-    const userId = validateUserId(id);
+    const userId = validateMongoId(id);
     this.logger.log(`Deleting user with ID: ${id}`);
 
     const result = await this.userModel.deleteOne({ _id: userId }).exec();
@@ -187,7 +187,7 @@ export class UsersService {
   ) {
     this.logger.log(`Updating user details for ID: ${id}`);
 
-    const userId = validateUserId(id);
+    const userId = validateMongoId(id);
 
     const { password, ...restData } = updateUserRecordDto;
 

@@ -4,7 +4,7 @@ import { Document, Types } from 'mongoose';
 // Define the document type so TypeScript recognizes the document instance
 export type UserDocument = User & Document;
 
-@Schema({ collection: 'users', timestamps: true })
+@Schema({ collection: 'users', timestamps: true, versionKey: false })
 export class User {
   @Prop({ required: true })
   firstName!: string;
