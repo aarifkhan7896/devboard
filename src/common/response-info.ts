@@ -8,4 +8,6 @@ export const responseMessages = {
   getUser: 'Data retrieved successfully',
   invalidKeyProvided: 'Invalid key provided',
   userDetailsUpdatedSuccessfully: 'User details updated successfully',
+  invalidCredentials: 'Invalid credentials',
+  invalidEmailOrPassword: 'Invalid email or password',
 };
