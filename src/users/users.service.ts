@@ -187,24 +187,4 @@ export class UsersService {
       message: responseMessages.userDetailsUpdatedSuccessfully,
     };
   }
-
-  async validateUser(email: string, pass: string) {
-    // 1. Find user and EXPLICITLY request the password field using +password
-    const user = await this.userModel.findOne({ email }).select('+password');
-
-    if (!user) {
-      throw new HttpException('Invalid credentials', HttpStatus.BAD_REQUEST);
-    }
-
-    // 2. Compare incoming plain-text password with stored hash
-    const isPasswordValid = await bcrypt.compare(pass, user.password);
-
-    if (!isPasswordValid) {
-      throw new HttpException('Invalid credentials', HttpStatus.BAD_REQUEST);
-    }
-
-    // 3. Password matched! Strip the hash before returning the user object
-    user.password = undefined;
-    return user;
-  }
 }

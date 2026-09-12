@@ -13,6 +13,15 @@ async function bootstrap() {
     .setDescription('The devboard API documentation')
     .setVersion('1.0')
     .addTag('Devboard')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        description: 'Enter your JWT access token',
+      },
+      'JWT-auth',
+    )
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, documentFactory);

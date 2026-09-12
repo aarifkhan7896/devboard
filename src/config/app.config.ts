@@ -10,6 +10,7 @@ export const appConfig = {
 
   jwt: {
     secret: getenv('JWT_SECRET', 'APP_VAULT'),
+    expiresIn: getenv('JWT_EXPIRES_IN', '15m'),
   },
 
   bcryptSaltRounds: getenv.int('BCRYPT_SALT_ROUNDS', 'APP_VAULT'),
